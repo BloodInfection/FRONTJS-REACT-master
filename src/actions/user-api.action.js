@@ -71,10 +71,11 @@ export const logout = () => (dispatch) => {
     type: LOGOUT,
   });
   UserAPIservice.logout().then(() => {
-  
+    localStorage.removeItem("sessionid")
     return Promise.resolve();
   },
   (error) => {
+    localStorage.removeItem("sessionid")
     const message =
       (error.response &&
         error.response.data &&
