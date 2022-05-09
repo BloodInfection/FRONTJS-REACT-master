@@ -4,7 +4,14 @@ const sessionid = "sessionid"
 
 class UserApiService {
   buildHeader() {
-    axios.defaults.headers.common[sessionid] = localStorage.getItem(sessionid)
+    let session = localStorage.getItem(sessionid);
+    console.log("session:", session)
+    if (session === null) {
+      console.log("deleting:", session)
+      delete axios.defaults.headers.common[sessionid];
+    } else {
+      axios.defaults.headers.common[sessionid] = session;
+    }
   }
 
   login(email, password) {
@@ -31,9 +38,7 @@ class UserApiService {
   register(email, name, password,  patronymic,  phone, surname) {
     this.buildHeader();
     return axios
-	.post(USERAPI_URL + "user", { email, name, password,  patronymic,  phone, surname}, {headers: {
-    sessionid: localStorage.getItem(sessionid)
-  }})
+	  .post(USERAPI_URL + "user", { email, name, password,  patronymic,  phone, surname})
 	.then((response)=>{
     return response.data;
 	}); 
