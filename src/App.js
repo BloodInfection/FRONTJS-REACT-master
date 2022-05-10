@@ -10,9 +10,6 @@ import Home from './pages/Home'
 import {Brands} from './pages/Brands'
 import ProductPage from './pages/ProductPage'
 
-
-import TestModel from './model/Testonnx'
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -43,7 +40,6 @@ function App() {
         <Route path="/favorite" element={<Favorite/>}></Route>
         <Route path="/search" element={<Search/>}></Route>
         <Route path="/product" element={<ProductPage/>}></Route>
-        <Route path="/test" element={<TestModel/>}></Route>
         
       
           
