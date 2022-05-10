@@ -16,8 +16,6 @@ const Styles = styled.div`
 	margin: 1%;
 }
 
-
-
 `
 
 export const Brands = () => (

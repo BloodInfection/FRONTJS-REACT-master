@@ -11,7 +11,7 @@ import Product from '../components/Product';
 class Home extends Component {
 
 	constructor(props) {
-	  super(props);
+	super(props);
 	
 	//  const page = new URLSearchParams(this.props.location.search).get("page")
 	  
@@ -20,7 +20,7 @@ class Home extends Component {
 		number: 1,
 		limit: 20,
 		products: [
-			
+
 		],
 		
 	  }; 
@@ -41,6 +41,7 @@ class Home extends Component {
 			console.log('ошибка listProducts',error)
 			return Promise.reject();
 		});
+		console.log('products', this.state.products)
 	}	
 
 
@@ -49,7 +50,10 @@ class Home extends Component {
 		const buildItems = () => { 
 			
 			if (this.state.products.length ===0) {
-				return <Container><h3>Товаров нет</h3></Container>
+				return <Container>
+					<h3>Товаров нет</h3>
+					<p style ={{'height': '245px'}}></p>
+					</Container>
 			}
 			return this.state.products.map((item, index)=>{
 				console.log(index);

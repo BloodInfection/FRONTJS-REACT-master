@@ -1,5 +1,5 @@
 import React from "react";
-
+// <Footer style ={{'position': 'absolute', 'left': '0','bottom': '0','width': '100%','height': '80px'}}/> в эп джиес   
 
 var style = {
     backgroundColor: "rgb(153,102,203)",
