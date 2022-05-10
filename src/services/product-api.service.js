@@ -234,7 +234,7 @@ PostSize (name, categoryId) {
 
 PostListByPhoto (image) {
   return axios //класс с методами:
-  .post(PRODUCTRAPI_URL + "product/list-by-photo", {image: image}, { timeout: 1000 , maxBodyLength: 1000000,
+  .post(PRODUCTRAPI_URL + "product/list-by-photo", {image: image}, { timeout: 100000 , maxBodyLength: 1000000,
     maxContentLength: 1000000, headers: { "Content-Type": "multipart/form-data" }})
   .then((response)=>{
     return response.data;
