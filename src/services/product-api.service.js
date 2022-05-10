@@ -1,5 +1,5 @@
 import axios from "axios";
-const PRODUCTRAPI_URL = "https://51.250.69.184:8080/v1/";
+const PRODUCTRAPI_URL = "http://51.250.69.184:8080/v1/";
 axios.defaults.withCredentials = true
 const sessionid = "sessionid"
 
