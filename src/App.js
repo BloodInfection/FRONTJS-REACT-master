@@ -5,10 +5,13 @@ import Register from './pages/Register'
 import Profile from './pages/Profile'
 import Categories from './pages/Categories'
 import Favorite from './pages/Favorite'
+import Cart from './pages/Cart'
 import Search from './pages/Search'
 import Home from './pages/Home'
-import {Brands} from './pages/Brands'
+import Brands from './pages/Brands'
 import ProductPage from './pages/ProductPage'
+import Orders from './pages/Orders'
+import Settings from './pages/Settings'
 
 import {
   BrowserRouter as Router,
@@ -16,11 +19,7 @@ import {
   Route,
 } from "react-router-dom";
 
-/*style="position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 80px;"*/
+
 
 function App() {
   
@@ -38,8 +37,11 @@ function App() {
         <Route path="/categories" element={<Categories/>}></Route>
         <Route path="/profile" element={<Profile/>}></Route>
         <Route path="/favorite" element={<Favorite/>}></Route>
+        <Route path="/cart" element={<Cart/>}></Route>
+        <Route path="/settings" element={<Settings/>}></Route>
         <Route path="/search" element={<Search/>}></Route>
-        <Route path="/product" element={<ProductPage/>}></Route>
+        <Route path="/product/:id" element={<ProductPage/>}></Route>
+        <Route path = "/orders" element={<Orders/>}></Route>
         
       
           

@@ -1,108 +1,125 @@
-import React from 'react';
-import {Badge, Dropdown, FormControl, InputGroup, DropdownButton, Col, Row} from 'react-bootstrap';
-import {useSearchParams } from "react-router-dom";
-import Product from '../components/Product'
-//import Feed from '../components/Feed'
-import styled from 'styled-components';
-import productStussy from '../image/product_stussy_bluegray.webp'
+import {React, Component}  from 'react';
+import Slider from '../components/Slider'
+import ProductAPIservice from "../services/product-api.service";
+import {Container, Col, Row, FormControl, Form, Dropdown, InputGroup, DropdownButton} from 'react-bootstrap';
+import {useParams, useSearchParams, Link} from "react-router-dom";
+import Product from '../components/Product';
+import { connect } from 'react-redux';
+
+function withParams(Component) {
+    return props => <Component {...props} params={useParams()} url = {useSearchParams()} />;
+}
 
 
-export default function Categories() {
-	
-	const Styles = styled.div`
-	.input-group {
-		margin: 10px;
-    	justify-content: center;
+class Categories extends Component{
+	constructor(props){
+		super(props);
+		this.state={
+			number: 1,
+			limit: 20,
+			products:[],
+		};
+
+		this.querryCreate = this.querryCreate.bind(this); 
+
 	}
-	
-	.dropdown-item {
-		color: black;
-		&:hover {
-			color: black;
-		}
-		&:active {
-			background-color: rgba(255, 255, 255, 0.445);
-		}
-	
+	querryCreate(param){
+		const [searchParams, setSearchParams] = this.props.url;
+		setSearchParams({ linkParam: param });
 	}
-	
-	
-	`
-	
-	
-	const [searchParams, setSearchParams] = useSearchParams();
-	let category = searchParams.get("category");
-	let brand = searchParams.get("brand");
-	searchParams.append("size", "43 RUS")
-	
-	
-	
-	return (
 
-		<>
-	
-		<Badge bg="secondary">Страница категорий c категорией = {category} и брендом = {brand}</Badge>
-		<Styles >
-	
-		<InputGroup className="mr-3" >
-			<DropdownButton 
-				variant="long"
-				title="Бренд"
-				id="input-group-dropdown-1"
-			>
-				<Dropdown.Item href="#">Levi`s</Dropdown.Item>
-				<Dropdown.Item href="#">Stussy</Dropdown.Item>
-				<Dropdown.Item href="#">Obey</Dropdown.Item>
-				<Dropdown.Item href="#">Fred Perry</Dropdown.Item>
+	componentDidMount(){
+		ProductAPIservice.GetListProducts(this.state.number, this.state.limit).then( // then - есть штучка promice. Хочу вызвать продукт лист он возвращает ф-ию promice. эту ф-ию нет смысла куда то присваивать(асинхронность). Выполнится продукт лист и после возвращения результата я обращусь к вернувшейся переменной по точке
+		(response) => { //круглые скобки - параметр функции, то что принимает. = function name(responce)
+//результат выполнения productList
+			console.log("listProducts",response)
+			
+			this.setState({
+				products: response.products,
+			});
+			return Promise.resolve(); //промис успешно завершен, остановка выполнения ф-ии
+		},
+		(error) => {
+			console.log('ошибка listProducts',error)
+			return Promise.reject();
+		});
+		console.log('products', this.state.products)
+	}
+
+	render() {  
+		const buildItems = () => { 
+			
+			if (this.state.products.length ===0) {
+				return <Container>
+					<h3>Товаров нет</h3>
+					<p style ={{'height': '245px'}}></p>
+					</Container>
+			}
+			return this.state.products.map((item, index)=>{
+				console.log(index);
+				console.log(item.url);
+				return (
+
+				
+				
+					<Product name = {item.name}  url = {item.url} id = {item.id} price = {item.price}/> 		
+				)
+				
+			})
+		}
+		return (
+			<>
+					
+				
+				<Container>
+				<Col >
+				<Row >
+				<InputGroup className="mr-3 onlycenter padding" >
+				<DropdownButton 
+					variant="long"
+					title="Бренд"
+					id="input-group-dropdown-1">
+					<Dropdown.Item onClick={()=>{this.querryCreate("levis")}}>Levi`s</Dropdown.Item>
+					<Dropdown.Item onClick={()=>{this.querryCreate("stussy")}}>Stussy</Dropdown.Item>
+					<Dropdown.Item onClick={()=>{this.querryCreate("obey")}}>Obey</Dropdown.Item>
+					<Dropdown.Item onClick={()=>{this.querryCreate("fredperry")}}>Fred Perry</Dropdown.Item>
 				</DropdownButton>
 
 				<DropdownButton 
-				variant="long"
-				title="Категория"
-				id="input-group-dropdown-1"
-			>
-				<Dropdown.Item href="#">Аксессуары</Dropdown.Item>
-				<Dropdown.Item href="#">Верхняя одеждка</Dropdown.Item>
-				<Dropdown.Item href="#">Легкий трикотаж</Dropdown.Item>
-				<Dropdown.Item href="#">Низ</Dropdown.Item>
-				<Dropdown.Item href="#">Обувь</Dropdown.Item>
-				<Dropdown.Item href="#">Рубашки и поло</Dropdown.Item>
-				<Dropdown.Item href="#">Свитера и толстовки</Dropdown.Item>
-				
+					variant="long"
+					title="Категория"
+					id="input-group-dropdown-1">
+					<Dropdown.Item  onClick={()=>{this.querryCreate("levis")}}>Аксессуары</Dropdown.Item>
+					<Dropdown.Item  onClick={()=>{this.querryCreate("levis")}}>Верхняя одеждка</Dropdown.Item>
+					<Dropdown.Item  onClick={()=>{this.querryCreate("levis")}}>Легкий трикотаж</Dropdown.Item>
+					<Dropdown.Item  onClick={()=>{this.querryCreate("levis")}}>Низ</Dropdown.Item>
+					<Dropdown.Item  onClick={()=>{this.querryCreate("levis")}}>Обувь</Dropdown.Item>
+					<Dropdown.Item  onClick={()=>{this.querryCreate("levis")}}>Рубашки и поло</Dropdown.Item>
+					<Dropdown.Item  onClick={()=>{this.querryCreate("levis")}}>Свитера и толстовки</Dropdown.Item>
 				</DropdownButton>
-
-				<DropdownButton 
-				variant="long"
-				title="Размер одежды"
-				id="input-group-dropdown-1"
-			>	<Dropdown.Item href="#">XS</Dropdown.Item>
-				<Dropdown.Item href="#">S</Dropdown.Item>
-				<Dropdown.Item href="#">M</Dropdown.Item>
-				<Dropdown.Item href="#">L</Dropdown.Item>
-				<Dropdown.Item href="#">XL</Dropdown.Item>
-				
-				
-				
-				
-				</DropdownButton>
-
-
 			</InputGroup>
+			</Row>
+			<Row>
+				
+				<Col>
+				<Row className='centertext justifycenter'>{buildItems()}</Row>
+				</Col>
+			</Row>
+				</Col>
+				</Container>
+			</>
+		);
+	}
 
-			</Styles>
+}
 
-		
-	
-		
-		<Row>
-    		<Col>	<Product description = "Футболка PIG. DYED INSIDE OUT CREW LAVENDER" name ="STUSSY" url ={productStussy}/></Col>
-			<Col>	<Product description = "Футболка PIG. DYED INSIDE OUT CREW LAVENDER" name ="STUSSY" url ={productStussy}/></Col>
-			<Col>	<Product description = "Футболка PIG. DYED INSIDE OUT CREW LAVENDER" name ="STUSSY" url ={productStussy}/></Col>
-			<Col>	<Product description = "Футболка PIG. DYED INSIDE OUT CREW LAVENDER" name ="STUSSY" url ={productStussy}/></Col>
-			<Col>	<Product description = "Футболка PIG. DYED INSIDE OUT CREW LAVENDER" name ="STUSSY" url ={productStussy}/></Col>
-			<Col>	<Product description = "Футболка PIG. DYED INSIDE OUT CREW LAVENDER" name ="STUSSY" url ={productStussy}/></Col>
-			<Col>	<Product description = "Футболка PIG. DYED INSIDE OUT CREW LAVENDER" name ="STUSSY" url ={productStussy}/></Col>	
-  		</Row>
-	
-		</>
-)}
+function mapStateToProps(state) {
+	const {isLoggedIn, user}  = state.userAPIreducer;
+	const {message}  = state.message;
+	return {
+	  isLoggedIn,
+	  message,
+	  user
+	};
+  }
+export default withParams(connect(mapStateToProps)(Categories));

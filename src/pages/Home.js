@@ -1,9 +1,15 @@
 import {React, Component}  from 'react';
 import Slider from '../components/Slider'
 import ProductAPIservice from "../services/product-api.service";
-import {Container, Col, Row} from 'react-bootstrap';
-import Footer from '../components/Footer'
+import {Container, Col, Row, Button} from 'react-bootstrap';
 import Product from '../components/Product';
+import fredperry from '../image/fp_2100x.jpg' 
+import levis from '../image/levis_2100x.jpg' 
+import obey from '../image/obey_2100x.jpg'
+import stussy from '../image/stussy_2100x.jpg'
+import stussyFrame from '../image/stussyFrame2.jpg'
+import ripndipFrame from '../image/ripndipframe.jpeg'
+
 //import {URLSearchParams} from 'http://localhost:3000/'
 
 
@@ -19,9 +25,7 @@ class Home extends Component {
 	  this.state = {
 		number: 1,
 		limit: 20,
-		products: [
-
-		],
+		products: [],
 		
 	  }; 
 	}
@@ -62,7 +66,7 @@ class Home extends Component {
 
 				
 				
-					<Product name = {item.name}  url = {item.url}/> 		
+					<Product name = {item.name}  url = {item.url} id = {item.id} price = {item.price}/> 		
 				)
 				
 			})
@@ -73,10 +77,38 @@ class Home extends Component {
 		return (
 			<>
 					
-				<Slider caption1="Levi's Skateboarding" caption2="Fred Perry" captiom3="Obey" caption4="Stussy"/>
+				<Slider caption1="Levi's Skateboarding" image1={levis} caption2="Fred Perry" image2 = {fredperry} caption3="Obey"  image3 = {obey} caption4="Stussy" image4 = {stussy}/>
 				<Container>
-				<Col>
-				<Row>{buildItems()}</Row>
+				
+				<Col className='centertext'>
+					
+					
+					
+
+					<Row className='  centertext padding justifycenter'>
+
+						<Col>
+							<div class="effects">
+ 							<img src={ripndipFrame} alt=""/>
+ 							<div>
+  							<h2 className=''>Ripndip</h2>
+  							<p>Самые яркие и смелые принты.</p>
+  							<Button variant = "long">Подробнее</Button>
+ 							</div>
+							</div>
+						</Col>
+						<Col>
+						<div class="effects">
+ 							<img src={stussyFrame} alt=""/>
+ 							<div>
+  							<h2>Stussy</h2>
+  							<p>Один из самых популярных брендов уличной одежды. </p>
+  							<Button variant = "long">Подробнее</Button>
+ 							</div>
+							</div>
+						</Col>
+					</Row>
+					<Row className='centertext justifycenter'>{buildItems()}</Row>
 			
 				</Col>
 				</Container>

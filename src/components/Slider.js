@@ -10,7 +10,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {Button} from 'react-bootstrap';
 
-export default function Slider() {
+export default function Slider(props) {
 	
 	const navigate = useNavigate()
 	const dispath = useDispatch()
@@ -26,33 +26,33 @@ export default function Slider() {
 			<Carousel.Item style ={{'height':'600px'}}>
 				<img 
 				className='d-block w-100'
-				src = {levis}
+				src = {props.image1}
 				alt = "First slide"
 				/> 
 				<Carousel.Caption>
-					<h3>Levi's Skateboarding</h3>
+					<h3>{props.caption1}</h3>
 					<Button onClick={brandsHandler} variant="long">Смотреть</Button>
 				</Carousel.Caption>
 			</Carousel.Item>
 			<Carousel.Item style ={{'height':'600px'}}>
 				<img 
 				className='d-block w-100'
-				src = {fredperry}
+				src = {props.image2}
 				alt = "First slide"
 				/> 
 				<Carousel.Caption>
-					<h3>Fred Perry</h3>
+					<h3>{props.caption2}</h3>
 					<Button onClick={brandsHandler} variant="long">Смотреть</Button>
 				</Carousel.Caption>
 			</Carousel.Item>
 			<Carousel.Item style ={{'height':'600px'}}>
 				<img 
 				className='d-block w-100'
-				src = {obey}
+				src = {props.image3}
 				alt = "First slide"
 				/> 
 				<Carousel.Caption>
-					<h3>Obey</h3>
+					<h3>{props.caption3}</h3>
 					<Button onClick={brandsHandler} variant="long">Смотреть</Button>
 				</Carousel.Caption>
 			</Carousel.Item>
@@ -60,11 +60,11 @@ export default function Slider() {
 			<Carousel.Item style ={{'height':'600px'}}>
 				<img 
 				className='d-block w-100'
-				src = {stussy}
+				src = {props.image4}
 				alt = "First slide"
 				/> 
 				<Carousel.Caption>
-					<h3>Stussy</h3>
+					<h3>{props.caption4}</h3>
 					<Button onClick={brandsHandler} variant="long">Смотреть</Button>
 				</Carousel.Caption>
 			</Carousel.Item>
