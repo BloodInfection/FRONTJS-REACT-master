@@ -9,7 +9,8 @@ import obey from '../image/obey_2100x.jpg'
 import stussy from '../image/stussy_2100x.jpg'
 import stussyFrame from '../image/stussyFrame2.jpg'
 import ripndipFrame from '../image/ripndipframe.jpeg'
-
+import FPFrame from '../image/FredPerryFrame2.jpg'
+import pleasuresFrame from '../image/plFrame.jpg'
 //import {URLSearchParams} from 'http://localhost:3000/'
 
 
@@ -89,10 +90,10 @@ class Home extends Component {
 
 						<Col>
 							<div class="effects">
- 							<img src={ripndipFrame} alt=""/>
+ 							<img src={pleasuresFrame} alt=""/>
  							<div>
-  							<h2 className=''>Ripndip</h2>
-  							<p>Самые яркие и смелые принты.</p>
+  							<h2 className=''> PLEASURES</h2>
+  							<p>Вещи в стиле культурного наследия 1990-х.</p>
   							<Button variant = "long">Подробнее</Button>
  							</div>
 							</div>
@@ -101,7 +102,7 @@ class Home extends Component {
 						<div class="effects">
  							<img src={stussyFrame} alt=""/>
  							<div>
-  							<h2>Stussy</h2>
+  							<h2>STUSSY</h2>
   							<p>Один из самых популярных брендов уличной одежды. </p>
   							<Button variant = "long">Подробнее</Button>
  							</div>

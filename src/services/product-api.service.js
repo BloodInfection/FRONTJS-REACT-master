@@ -95,7 +95,7 @@ class ProductApiService {
 
 
   GetFinalProductList(productId) {
-   
+    this.buildHeader();
     return axios //класс с методами:
     .get(PRODUCTRAPI_URL + "final-product/list", {params:{productId}})
     .then((response)=>{

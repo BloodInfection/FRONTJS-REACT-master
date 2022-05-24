@@ -41,23 +41,23 @@ class Profile extends Component{
 		<Row>
 			<Col className= "block-example  profileSidebar ">
 				<div className='  roundbordersLight profilepadding'>
-				<Row><Button variant = "none" className='paddingLeftNo' onClick={()=>{this.querryCreate("cart")}}>Корзина</Button></Row>
-				<Row><Button variant = "none" className='paddingLeftNo' onClick={()=>{this.querryCreate("orders")}}>Заказы</Button></Row>
-				<Row><Button variant = "none" className='paddingLeftNo' onClick={()=>{this.querryCreate("favorite")}}>Избранное</Button></Row>
-				<Row><Button variant = "none" className='paddingLeftNo'  onClick={()=>{this.querryCreate("settings")}}>Настройки</Button></Row>
+				<Row><Button variant = "none" className='paddingLeftNo dark' onClick={()=>{this.querryCreate("cart")}}>Корзина</Button></Row>
+				<Row><Button variant = "none" className='paddingLeftNo dark' onClick={()=>{this.querryCreate("orders")}}>Заказы</Button></Row>
+				<Row><Button variant = "none" className='paddingLeftNo dark' onClick={()=>{this.querryCreate("favorite")}}>Избранное</Button></Row>
+				<Row><Button variant = "none" className='paddingLeftNo dark'  onClick={()=>{this.querryCreate("settings")}}>Настройки</Button></Row>
 				</div>
 			</Col>
 			
-			<Col className='  roundbordersLight	 '>
-		
+			<Col >
+				<div className='  roundbordersLight usernamePadding' >
 				<Row className='displaytable smallPadding'>
 					<Col className=' tablecellmiddle '>
-					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person-fill" viewBox="0 0 16 16">
+					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="rgba(24, 49, 63, 0.96) " class="bi bi-person-fill" viewBox="0 0 16 16">
   <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
 </svg>
 					</Col>
 					<Col className=' tablecellmiddle '>
-					<h2 className="block-example  medium " style={{"margin-bottom":"0"}}>{user.name+" "+user.patronymic+" "+user.surname}</h2> 
+					<h2 className="block-example  medium dark" style={{"margin-bottom":"0"}}>{user.name+" "+user.patronymic+" "+user.surname}</h2> 
 					</Col>
 					
 				</Row>
@@ -69,19 +69,21 @@ class Profile extends Component{
 					</Col>
 
 					<Col className=' tablecellmiddle '>
-					<p>Email: {user.email}</p>
-					<p> Номер телефона: {user.phone} </p>
+					<p className='dark'>Email: {user.email}</p>
+					<p className='dark'> Номер телефона: {user.phone} </p>
 					</Col>
 				</Row>
-				
+				</div>
 			</Col>
 		</Row>
 
-		<Row>
+		<Row className="bigPadding">
+			<div  className='  roundbordersLight paddingBottom'>
 		{param === "cart" && <Cart/>}
 		{param === "orders" && <Orders/>}
 		{param === "favorite" && <Favorite/>}
 		{param === "settings" && <Settings/>}
+		</div>
 		</Row>
 	</Col>
 	</Container>}

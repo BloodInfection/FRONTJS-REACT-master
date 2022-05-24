@@ -20,6 +20,7 @@ class Cart extends Component{
                 message: "",
                 messageClear: "",
                 messageUpdate: "",
+                totalCount: null,
                 
 
             };
@@ -186,7 +187,7 @@ class Cart extends Component{
 
                 {this.state.cartProducts.map((item, index)=>{ 
                 message = "" 
-             
+                this.state.totalCount = this.state.totalCount+(item.userQuantity * item.price)
                 if ( parseInt(item.amount,10) <  parseInt(item.userQuantity,10)){//-------------У С Л О В И Е-----------
                     console.log("item.amount", item.amount)
                 console.log("item.userQuantity", item.userQuantity)
@@ -194,6 +195,8 @@ class Cart extends Component{
                 }
 				console.log("index",index);
 				console.log("item.url",item.url);
+               
+                console.log("totalCount",this.state.totalCount);
 				return (  //-------------I T E M S-----------
                     <>
                     <Row className="block-example border-bottom border-cart" >
@@ -238,12 +241,16 @@ class Cart extends Component{
             <Col className="block-example  centertext">
                 <Row> 
                     <Col sm = {1}></Col> 
-                    <Col sm = {8}></Col>
+                    <Col sm = {8}> </Col>
                     <Col sm = {1}></Col> 
                 </Row>
         
             </Col>
             <Col className="block-example  centertext">
+            <h4 className='medium padding'>{this.state.totalCount} руб.</h4>
+            </Col>
+            <Col className="block-example  centertext">
+           
                 {this.state.orderAllow && <span style ={{'padding-top':'20px'}}><Button variant='flat' onClick = {this.createOrder} >Оформить заказ</Button></span>}
                 {!this.state.orderAllow && <span style ={{'padding-top':'20px'}}><Button variant='flatBan'>Оформить заказ</Button></span>}
             </Col>
