@@ -25,6 +25,7 @@ class ProductPage extends Component {
 		messageNoSize: "",
 		isFavorite: false,
 		favoriteId: "",
+		messageInCart: "",
 	  }; 
 
 	  this.onChangeSizeId = this.onChangeSizeId.bind(this);
@@ -38,17 +39,26 @@ class ProductPage extends Component {
 		this.setState({
 			sizeId: e.target.value,
 			messageNoSize: "",
+			messageInCart: "",
 		});
 		console.log( e.target.value)
 		this.state.finalProducts.map((item, index) => {
+			
 			if (item.sizeId === e.target.value){
-				if(item.amount< 1){
+				if(parseInt(item.amount,10)< 1){
 					console.log(e.target.value)
 					console.log("тут")
 					this.setState({
 						messageNoSize: "Извините, товара с данным размером нет в наличии."
 					})
 				}
+				if(parseInt(item.userQuantity,10) >= 1) {
+					console.log("messageInCart в ифе",this.state.messageInCart)
+					this.setState({
+						messageInCart: "уже в корзине",
+					})
+				}
+				
 			}
 		});
 	}
@@ -58,10 +68,13 @@ class ProductPage extends Component {
 		console.log(product);
 		UserAPIservice.addToCart(product[0].id, 1).then( //---------------------USER---------API------------
 			(response) => {
-					
+				this.componentDidMount();
+                this.forceUpdate();
 					return Promise.resolve(); //промис успешно завершен, остановка выполнения ф-ии
 				},
 			(error) => {
+				this.componentDidMount();
+                this.forceUpdate();
 					console.log('ошибка addToCart',error)
 					return Promise.reject();
 				});
@@ -104,6 +117,7 @@ class ProductPage extends Component {
 	loadFullProductList(id) {
 		ProductAPIservice.GetFinalProductList(id).then( //---------------------GET---------FINAL------------
 		(response) => {
+			
 				console.log("данные товара с айди",response);
 				this.setState({
 					finalProducts: response.products,
@@ -144,14 +158,32 @@ class ProductPage extends Component {
 						favoriteId: response.favoriteId,
 					});
 				}
+				
 				if (this.state.product.sizes.length!==0){
 					this.setState({
-				 
 						sizeId: response.sizes[0].id,
-						
 					});
+					this.state.finalProducts.map((item,index)=>{
+						if(item.sizeId===response.sizes[0].id){
+							if(parseInt(item.amount)<1){
+								this.setState({
+									messageNoSize: "Извините, товара с данным размером нет в наличии"
+								})
+							}
+							console.log("userquantity",item.userQuantity)
+							if(parseInt(item.userQuantity)>=1){
+								this.setState({
+									messageInCart: "Товар уже в корзине",
+								})
+							}
+						}
+					})
+
+
 					this.loadFullProductList(id)
-				} else if (this.state.product.sizes.length===0){
+				}
+				
+				else if (this.state.product.sizes.length===0){
 					this.setState({
 						messageNoSize: "Извините, товар недоступен."
 					})
@@ -221,10 +253,11 @@ class ProductPage extends Component {
 
 										<Row className='displaytable'>
 											<Col className=' tablecellmiddle '>
-											{this.state.product.userQuantity === "0" && isLoggedIn && this.state.messageNoSize === "" && <Button variant = 'flat' onClick={this.addToCart}>Добавить в корзину</Button>}
-											{this.state.product.userQuantity === "0" && isLoggedIn && this.state.messageNoSize !== "" && <Button variant = 'flatBan'>Добавить в корзину</Button>}
-											{this.state.product.userQuantity !== "0" && isLoggedIn && <Button variant = 'flatBan'>Добавить в корзину</Button>}
-										
+											{this.state.messageInCart === "" && isLoggedIn && this.state.messageNoSize === "" && <Button variant = 'flat' onClick={this.addToCart}>Добавить в корзину</Button>}
+											{console.log("message in cart",this.state.messageInCart)}
+											{this.state.messageInCart !== "" && isLoggedIn && this.state.messageNoSize !== "" && <Button variant = 'flatBan'>Добавить в корзину</Button>}
+											{this.state.messageInCart !== ""  && isLoggedIn && <Button variant = 'flatBan'>Добавить в корзину</Button>}
+											{this.state.messageInCart === "" && isLoggedIn && this.state.messageNoSize !== "" && <Button variant = 'flatBan'>Добавить в корзину</Button>}
 											{!isLoggedIn && <h5 className='dark'>Пожалуйста, выполните <Link to ="/signin" className='simpleLink dark medium'>вход</Link> для добавления товара в корзину.</h5> }
 											
 											</Col>
@@ -256,7 +289,8 @@ class ProductPage extends Component {
 										
 									</Form>
 
-									{this.state.product.userQuantity !== "0" && isLoggedIn &&  <h6 className='textBan padding regular'>Товар уже есть в <Link to ="/cart" className='banLink textBan medium'>корзине.</Link></h6> }
+									{this.state.messageInCart !== "" && isLoggedIn &&  <h6 className='textBan padding regular'>Товар уже есть в <Link to ="/cart" className='banLink textBan medium'>корзине.</Link></h6> }
+									
 									<h6 className='padding textBan'>{this.state.messageNoSize}</h6>
 									<Row className='displaytable'>
 										<Col className=' tablecellmiddle '>

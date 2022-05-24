@@ -379,7 +379,7 @@ input.fileInput{
     justify-content: center;
     align-items: center;
     margin:0;
-    padding-bottom: 20px;
+    padding-bottom: 50px;
     padding-top: 20px;
 }
 .centertext{
@@ -427,11 +427,11 @@ input.fileInput{
 
 
 .spinner-border{
-  color: rgb(87, 75, 99);
+  color: #50A2C5;
 }
 
 .dark{
-  color: rgba(47, 43, 70, 0.96)
+  color: rgba(58, 53, 88, 0.96)
 }
 .backgroundColorDark{
   background:linear-gradient(125.81deg, rgba(47, 43, 70, 0.96) 14.15%, rgba(24, 49, 63, 0.96) 90.21%);
@@ -444,6 +444,19 @@ input.fileInput{
 .smallPadding{
   padding: 10px;
 }
+.bigPadding{
+  padding-top: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  
+}
+.paddingBottom{
+  padding-bottom: 35px;
+}
+.usernamePadding{
+  padding: 17px;
+}
+
 .paddingLeftNo{
  
   text-align: left;
