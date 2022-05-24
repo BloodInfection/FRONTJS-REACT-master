@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {Form, Button, Container} from 'react-bootstrap';
+import {Form, Button, Container, Col, Row} from 'react-bootstrap';
 import { login } from '../actions/user-api.action'
 import { connect } from 'react-redux'
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link} from 'react-router-dom';
 
 
 class Login extends Component {
@@ -72,12 +72,19 @@ class Login extends Component {
 				<Form.Label>Пароль</Form.Label>
 				<Form.Control type="password" placeholder="Пароль" value={this.state.password} onChange={this.onChangePassword}/>
 			</Form.Group>
-			<Form.Group className="mb-3" controlId="formBasicCheckbox">
-				<Form.Check type="checkbox" label="Запомнить меня" />
-			</Form.Group>
-			<Button variant="flat" type="submit">
-				Войти
-			</Button>
+			
+			<Row className='displaytable'>
+				<Col className='tablecellmiddlenowidth'>
+				<Button variant="flat" type="submit" style={{'width': '150px'}}>
+					Войти
+				</Button>
+				</Col>
+				<Col className='tablecellmiddlenowidth'>	
+				<Link to = "/signup" className='simpleLink dark'>Зарегистрироваться</Link>
+				</Col>
+			</Row>
+				
+			
 		</Form>
 	</Container>
 	</>

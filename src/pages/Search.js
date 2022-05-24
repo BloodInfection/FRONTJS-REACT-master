@@ -1,8 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
 import styled from 'styled-components';
 import ProductAPIservice from "../services/product-api.service";
-import {Container, Col, Row} from 'react-bootstrap';
+import {Container, Col, Row, Spinner} from 'react-bootstrap';
 import Product from '../components/Product';
 
 const Styles = styled.div`
@@ -25,7 +24,9 @@ class Search extends React.Component {
       encoded: '',
       products: [ 
         
-      ], };
+      ], 
+      loading: false,
+    };
 
       this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -35,16 +36,22 @@ class Search extends React.Component {
 //--------------------------------------------------------------------------------
   handleSubmit(e) {
     e.preventDefault();
-      
+    this.setState({
+      loading: true,
+    })  
     ProductAPIservice.PostListByPhoto(this.state.encoded).then( //----PostListByPhoto
     (response) => {
 			console.log("listProducts",response);
       this.setState({
 				products: response.products,
+        loading: false,
 			});
 			return Promise.resolve(); //промис успешно завершен, остановка выполнения ф-ии
 		},
     (error) => {
+      this.setState({
+        loading: false,
+			});
 			console.log('ошибка listProducts',error)
 			return Promise.reject();
 		});
@@ -96,7 +103,7 @@ class Search extends React.Component {
 				console.log(index);
 				console.log(item.url);
 				return (
-					<Product name = {item.name}  url = {item.url}/> 		
+					<Product name = {item.name}  url = {item.url} price = {item.price} id = {item.id}/> 		
 				)
 				
 			})
@@ -104,15 +111,15 @@ class Search extends React.Component {
 
 
     if (imagePreviewUrl) {
-      $imagePreview = (<img style={{'height': '400px' , 'position':'innerit'}}  src={imagePreviewUrl}  />);
+      $imagePreview = (<img style={{'height': '400px' , 'position':'innerit'}}  src={imagePreviewUrl} alt = "Изображение"  />);
       $photoIcon = null
-      $Button = <div class = 'center1'><button class="btn-search" style={{'position':'relative'}}  onClick={(e)=>this.handleSubmit(e)} >Найти похожие </button></div>
-      if (this.state.products.length !=0){
+      $Button = <div class = 'centerSearchButton'><button class="btn-search" style={{'position':'relative'}}  onClick={(e)=>this.handleSubmit(e)} >Найти похожие </button></div>
+      if (this.state.products.length !==0){
         $Result = <Row>{buildItems()}</Row>
       }
      
     } else {
-      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+      $imagePreview = (<div className="previewText">Пожалуйста, загрузите изображения для поиска</div>);
       $photoIcon = (<svg xmlns="http://www.w3.org/2000/svg" width="177" height="177" fill="
       #c0c0c0" class="bi bi-camera-fill" viewBox="0 0 16 16">
       <path d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
@@ -143,6 +150,7 @@ class Search extends React.Component {
 
     return (
     <Styles>
+    
       <Container>
         <Row >
           <div className="previewComponent" >
@@ -150,7 +158,11 @@ class Search extends React.Component {
                 {$photoIcon}
                 {$imagePreview }
             </div>
+          
           { $Button}
+          {this.state.loading && <Container className="block-example  centerWithPadding100"><Spinner animation="border" role="status" className="block-example  loading" >
+  <span className="visually-hidden">Loading...</span>
+</Spinner></Container>}
           </div>
         </Row>
         <row>

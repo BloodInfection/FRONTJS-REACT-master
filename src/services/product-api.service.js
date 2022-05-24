@@ -1,11 +1,32 @@
 import axios from "axios";
+import {useSelector, useDispatch} from 'react-redux';
+import { logout } from '../actions/user-api.action';
+import store from '../store'
+
 const PRODUCTRAPI_URL = "http://51.250.69.184:8080/v1/";
 axios.defaults.withCredentials = true
 const sessionid = "sessionid"
 
+axios.interceptors.response.use((response) => response, (error) => {
+  if (error.response.status === 401) {
+    store.dispatch(logout())
+    window.location = '/signin';
+  }
+});
+
 //TODO создать некоторые ручки для продукт апи
 class ProductApiService {
 
+  buildHeader() {
+    let session = localStorage.getItem(sessionid);
+    console.log("session:", session)
+    if (session === null) {
+      console.log("deleting:", session)
+      delete axios.defaults.headers.common[sessionid];
+    } else {
+      axios.defaults.headers.common[sessionid] = session;
+    }
+  }
 
   //----------------------------------------------------------------GET---------------------------------------------------------------
 
@@ -64,7 +85,7 @@ class ProductApiService {
   }
 
   GetFullProduct (productId) {
-   
+    this.buildHeader();
     return axios //класс с методами:
     .get(PRODUCTRAPI_URL + "full-product", {params:{productId}})
     .then((response)=>{
@@ -116,6 +137,15 @@ class ProductApiService {
    
     return axios //класс с методами:
     .get(PRODUCTRAPI_URL + "brand/list")
+    .then((response)=>{
+      return response.data;
+    }); 
+  }
+
+  GetListBrandGroup () {
+   
+    return axios //класс с методами:
+    .get(PRODUCTRAPI_URL + "brand/list/grouped")
     .then((response)=>{
       return response.data;
     }); 
